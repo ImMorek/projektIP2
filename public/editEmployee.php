@@ -4,7 +4,7 @@ require_once __DIR__ . "/../bootstrap/bootstrap.php";
 class EditEmployeePage extends BasePage
 {
     private $employee;
-    private $rooms;
+    private $roomsWithKeys;
     private $error_msg;
 
     protected function prepare(): void
@@ -66,9 +66,19 @@ class EditEmployeePage extends BasePage
 
         $this->employee = $stmt->fetch();
 
-        $stmt = $pdo->prepare("SELECT `room_id`, `name` FROM `key`INNER JOIN room ON (room.room_id = key.room) WHERE key.employee = :employeeId");
+        //S tímto příkazem se omlouvám, využil jsem umělé inteligence chatgpt, jiný způsob pro checkboxy mě nenapadl
+        $stmt = $pdo->prepare("SELECT k.room, 
+        CASE WHEN e.key_id IS NOT NULL THEN e.key_id ELSE NULL END AS hasKey 
+        FROM (
+        SELECT DISTINCT room 
+        FROM `key`) k
+        LEFT JOIN (
+        SELECT room, key_id 
+        FROM `key`
+        WHERE employee = :employeeId) e 
+        ON k.room = e.room;");
         $stmt->execute(['employeeId' => $employeeId]);
-        $this->rooms = $stmt->fetchAll();
+        $this->roomsWithKeys = $stmt->fetchAll();
 
         $this->title = "Úprava osoby {$this->employee->name} {$this->employee->surname}";
 
@@ -79,7 +89,7 @@ class EditEmployeePage extends BasePage
         //prezentovat data
         return MustacheProvider::get()->render(
             'editEmployee',
-            ['employee' => $this->employee, 'rooms' => $this->rooms]
+            ['employee' => $this->employee, 'employeeKeys' => $this->roomsWithKeys]
         );
     }
 

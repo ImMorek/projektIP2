@@ -18,16 +18,24 @@
     <dd><input type="text" id="wage" name="wage" value={{wage}}></dd>
 
     <dt>Místnost (přidat radio buttons)</dt>
-    <dd><input type="text" id="room" name="room" value={{room}}></dd>
-
-
-    <dt>Klíče</dt>
         {{#rooms}}
         <dd>
-            Přidej úpravu klíčů prosím a děkuji :))))))))
+            <input type="radio" id="room{{room_id}}" name="selectedRooms" value="room_name">
             <a href='room.php?roomId={{room_id}}'>{{room_name}}</a> 
         </dd>
         {{/rooms}}
+
+
+
+
+
+    <dt>Klíče</dt>
+        {{#roomsWithKeys}}
+        <dd>
+            <input type="checkbox" id="room{{room_id}}" name="room{{room_id}}" value="room_name">
+            <a href='room.php?roomId={{room_id}}'>{{room_name}}</a> 
+        </dd>
+        {{/roomsWithKeys}}
 </dl>
 
 <input type="submit" value="Potvrdit">
