@@ -1,0 +1,44 @@
+<h1>Seznam Zaměstnanců</h1>
+{{#error_msg}}
+<h2 class="text-danger">{{error_msg}}</h2>
+{{/error_msg}}
+<table class='table table-striped'>
+    <tr>
+        <th>Jméno</th>
+        <th>Místnost</th>
+        <th>Telefon</th>
+        <th>Pozice</th>
+        <th>Akce</th>
+    </tr>
+
+    {{#employees}}
+    <tr>
+        <td>
+            <a href='employee.php?employeeId={{employee_id}}'>{{employeeName}} {{surname}}</a>
+        </td>
+        <td>{{room}}</td>
+        <td>{{roomPhone}}</td>
+        <td>{{job}}</td>
+        {{#isadmin}}
+        <td><button type="button" class="btn btn-secondary" disabled>Upravit</button> <button type="button" class="btn btn-danger" disabled>Smazat</button></td>
+        {{/isadmin}}
+        {{^isadmin}}
+        <form action="deleteEmployee.php" method="post">
+        <td><a type="button" href="editEmployee.php?employeeId={{employee_id}}" class="btn btn-secondary">Upravit</a> 
+        <input type="hidden" name="employeeId" value="{{employee_id}}">
+        <input type="submit" class="btn btn-danger"  onclick="return confirm('Opravdu chcete smazat místnost?\nAkce je nevratná!');" value="Smazat">
+        </form>
+        </td>
+        {{/isadmin}}
+    </tr>
+    {{/employees}}
+
+    {{^employees}}
+        <tr><td colspan="3">Databáze je prázdná</td></tr>
+    {{/employees}}
+
+</table>
+    {{^isadmin}}
+        <a href="addEmployee.php?employeeId={{highest}}" type="button" class="btn btn-primary">Přidat</a>
+    {{/isadmin}}
+

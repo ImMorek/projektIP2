@@ -1,0 +1,76 @@
+{{#employee}}
+<h1>Úprava zaměstnance {{name}} {{surname}}</h1>
+{{#error_msg}}
+<h2 class="text-danger">{{error_msg}}</h2>
+{{/error_msg}}
+<form method="post">
+<dl>
+    <dt>Jméno</dt>
+    <dd><input type="text" id="name" name="name" value={{name}}></dd>
+
+    <dt>Příjmení</dt>
+    <dd><input type="text" id="surname" name="surname" value={{surname}}></dd>
+
+    <dt>Pozice</dt>
+    <dd><input type="text" id="job" name="job" value={{job}}></dd>
+
+    <dt>Mzda</dt>
+    <dd><input type="text" id="wage" name="wage" value={{wage}}></dd>
+
+    <dt>Místnost (přidat radio buttons)</dt>
+    <dd><input type="text" id="room" name="room" value={{room}}></dd>
+
+
+    <dt>Klíče</dt>
+        {{#rooms}}
+        <dd>
+            Přidej úpravu klíčů prosím a děkuji :))))))))
+            <a href='room.php?roomId={{room_id}}'>{{room_name}}</a> 
+        </dd>
+        {{/rooms}}
+</dl>
+
+<input type="submit" value="Potvrdit">
+</form>
+{{/employee}}
+
+{{^employee}}
+<h1>Nový zaměstnanec</h1>
+{{#error_msg}}
+<h2 class="text-danger">{{error_msg}}</h2>
+{{/error_msg}}
+<form method="post">
+<dl>
+    <dt>Jméno</dt>
+    <dd><input type="text" id="name" name="name" value={{new_name}}></dd>
+
+    <dt>Příjmení</dt>
+    <dd><input type="text" id="surname" name="surname" value={{new_surname}}></dd>
+
+    <dt>Pozice</dt>
+    <dd><input type="text" id="job" name="job" value={{new_job}}></dd>
+
+    <dt>Mzda</dt>
+    <dd><input type="text" id="wage" name="wage" value={{new_wage}}></dd>
+
+    <dt>Místnost</dt>
+    <dd><input type="text" id="room" name="room" value={{new_room}}></dd>
+
+
+    <dt>Klíče</dt>
+        {{#rooms}}
+        <dd>
+            Ještě přidej upravování klíčů no
+            {{! <a href='room.php?roomId={{room_id}}'></a>  }}
+        </dd>
+        {{/rooms}}
+</dl>
+
+<input type="submit" value="Potvrdit">
+</form>
+{{/employee}}
+
+
+
+
+

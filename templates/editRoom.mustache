@@ -1,0 +1,53 @@
+{{#room}}
+<h1>Úprava místnosti {{no}}</h1>
+{{#error_msg}}
+<h2 class="text-danger">{{error_msg}}</h2>
+{{/error_msg}}
+<form method="post">
+<dl>
+    <dt>Název</dt>
+    <dd><input type="text" id="name" name="name" value={{name}}></dd>
+
+    <dt>Číslo</dt>
+    <dd><input type="text" id="no" name="no" value={{no}}></dd>
+
+    <dt>Telefon</dt>
+    <dd><input type="text" id="phone" name="phone" value={{#phone}}{{phone}}{{/phone}}{{^phone}}&mdash;{{/phone}}></dd>
+
+
+    <dt>Lidé</dt>
+    {{#employees}}
+        <dd>
+            <a href='employee.php?employeeId={{employee_id}}'>{{surname}} {{name}}</a>
+        </dd>
+    {{/employees}}
+</dl>
+
+<input type="submit" value="Potvrdit">
+</form>
+{{/room}}
+
+{{^room}}
+<h1>Nová místnost</h1>
+{{#error_msg}}
+<h2 class="text-danger">{{error_msg}}</h2>
+{{/error_msg}}
+<form method="post">
+<dl>
+    <dt>Název</dt>
+    <dd><input type="text" id="name" name="name" value="{{new_name}}"></dd>
+
+    <dt>Číslo</dt>
+    <dd><input type="text" id="no" name="no" value="{{new_no}}"></dd>
+
+    <dt>Telefon</dt>
+    <dd><input type="text" id="phone" name="phone" value="{{new_phone}}"></dd>
+
+
+    <dt>Lidé</dt>
+    <dd>Přiřaďte k místnosti lidi v úpravě zaměstnanců</dd>
+</dl>
+
+<input type="submit" value="Potvrdit">
+</form>
+{{/room}}

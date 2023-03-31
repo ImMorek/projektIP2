@@ -1,0 +1,41 @@
+<h1>Seznam Místností</h1>
+{{#error_msg}}
+<h2 class="text-danger">{{error_msg}}</h2>
+{{/error_msg}}
+<table class='table table-striped'>
+    <tr>
+        <th>Jméno</th>
+        <th>Číslo</th>
+        <th>Telefon</th>
+        <th>Akce</th>
+    </tr>
+    {{#rooms}}
+    <tr>
+        <td>
+            <a href='room.php?roomId={{room_id}}'>{{name}}</a>
+        </td>
+        <td>{{no}}</td>
+        <td>{{#phone}}{{phone}}{{/phone}}{{^phone}}&mdash;{{/phone}}</td>
+        {{#isadmin}}
+        <td><button type="button" class="btn btn-secondary" disabled>Upravit</button> <button type="button" class="btn btn-danger" disabled>Smazat</button></td>
+        {{/isadmin}}
+        {{^isadmin}}
+        <form action="deleteRoom.php" method="post">
+        <td><a type="button" href="editRoom.php?roomId={{room_id}}" class="btn btn-secondary">Upravit</a>
+        <input type="hidden" name="roomId" value="{{room_id}}">
+        <input type="submit" class="btn btn-danger" onclick="return confirm('Opravdu chcete smazat místnost?\nAkce je nevratná!');" value="Smazat">
+        </form>
+        </td>
+        {{/isadmin}}
+    </tr>
+    {{/rooms}}
+    
+    {{^rooms}}
+        <tr><td colspan="3">Databáze je prázdná</td></tr>
+    {{/rooms}}
+</table>
+    {{^isadmin}}
+        <a href="addRoom.php?roomId={{highest}}" type="button" class="btn btn-primary">Přidat</a>
+    {{/isadmin}}
+
+
